@@ -1,4 +1,15 @@
-baseURL = 'https://example.org/'
-locale = 'en-us'
-title = 'My New Hugo Project'
+baseURL = 'https://Judy2026-wyy.github.io/my-blog/'
+languageCode = 'zh-cn'
+title = 'Judy 的博客'
 theme = 'ananke'
+
+[taxonomies]
+  category = 'categories'
+  tag = 'tags'
+
+[params]
+  mainSections = ['posts']
+
+[params.ananke]
+  show_recent_posts = true
+  show_categories = true
