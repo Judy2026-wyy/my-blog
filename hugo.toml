@@ -1,5 +1,5 @@
 baseURL = 'https://Judy2026-wyy.github.io/my-blog/'
-languageCode = 'zh-cn'
+locale = 'zh-cn'
 title = 'Judy 的博客'
 theme = 'ananke'
 
@@ -8,8 +8,36 @@ theme = 'ananke'
   tag = 'tags'
 
 [params]
-  mainSections = ['posts']
+  # 首页「最近文章」会从这些板块里抓取文章
+  mainSections = ['posts', 'study', 'notes', 'life']
 
 [params.ananke]
   show_recent_posts = true
   show_categories = true
+
+# ↓↓↓ 网站顶部导航栏。weight 数字越小越靠左 ↓↓↓
+
+[[menus.main]]
+  name = '文章'
+  pageRef = '/posts/'
+  weight = 10
+
+[[menus.main]]
+  name = '学习笔记'
+  pageRef = '/study/'
+  weight = 20
+
+[[menus.main]]
+  name = '读书笔记'
+  pageRef = '/notes/'
+  weight = 30
+
+[[menus.main]]
+  name = '生活随笔'
+  pageRef = '/life/'
+  weight = 40
+
+[[menus.main]]
+  name = '关于我'
+  pageRef = '/about/'
+  weight = 50

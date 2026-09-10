@@ -1,0 +1,54 @@
+{{/*
+  覆盖 ananke 主题的列表页模板（themes/ananke/layouts/list.html）。
+  仅在「该板块下有子板块」时多做两件事：
+    1. 在简介下方列出子板块入口按钮，后面的数字是该子板块的文章数
+    2. 文章列表改用 RegularPagesRecursive，把子板块里的文章也一并列出
+  没有子板块的板块（posts / notes / life）以及分类、标签页，行为与主题原版一致。
+
+  注意：这里用 if 而不是 with —— 实测 Hugo 0.166 下 with .Sections 不会进入块内。
+*/}}
+{{ define "main" }}
+  {{ $summary_template := "summary" }}
+  {{ if $.Param "ananke.pages.show_list_images" }}
+    {{ $summary_template = "summary-with-image" }}
+  {{ end }}
+
+  {{/* 有子板块就递归取文章，否则沿用主题默认行为 */}}
+  {{ $paginator := "" }}
+  {{ if .Sections }}
+    {{ $paginator = .Paginate .RegularPagesRecursive }}
+  {{ else }}
+    {{ $paginator = .Paginator }}
+  {{ end }}
+
+  <article class="pa3 pa4-ns nested-copy-line-height">
+    <section class="cf ph3 ph5-l pv3 pv4-l f4 tc-l center measure-wide lh-copy nested-links {{ $.Param "text_color" | compare.Default "mid-gray" }}">
+      {{- .Content -}}
+    </section>
+
+    {{ if .Sections }}
+      <section class="cf ph3 ph5-l pv2 center measure-wide tc">
+        <ul class="list pl0 mv0">
+          {{ range .Sections.ByWeight }}
+            <li class="dib mb2 mr2">
+              <a class="link dib pv2 ph3 br2 ba b--moon-gray dark-gray hover-bg-light-gray no-underline"
+                 href="{{ .RelPermalink }}">
+                {{ .Title }}
+                <span class="f6 gray">{{ len .RegularPagesRecursive }}</span>
+              </a>
+            </li>
+          {{ end }}
+        </ul>
+      </section>
+    {{ end }}
+
+    <section class="flex-ns mt5 flex-wrap justify-around">
+      {{ range $paginator.Pages }}
+        <div class="w-100 w-30-l mb4 relative bg-white">
+          {{ .Render $summary_template }}
+        </div>
+      {{ end }}
+    </section>
+    {{ partial "pagination.html" . -}}
+  </article>
+{{ end }}
