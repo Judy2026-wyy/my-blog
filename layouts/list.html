@@ -1,25 +1,16 @@
 {{/*
   覆盖 ananke 主题的列表页模板（themes/ananke/layouts/list.html）。
-  仅在「该板块下有子板块」时多做两件事：
-    1. 在简介下方列出子板块入口按钮，后面的数字是该子板块的文章数
-    2. 文章列表改用 RegularPagesRecursive，把子板块里的文章也一并列出
-  没有子板块的板块（posts / notes / life）以及分类、标签页，行为与主题原版一致。
+  文章按日期倒序逐行显示标题，不展示摘要卡片。
+  保留子板块入口，并递归列出子板块中的文章。
 
   注意：这里用 if 而不是 with —— 实测 Hugo 0.166 下 with .Sections 不会进入块内。
 */}}
 {{ define "main" }}
-  {{ $summary_template := "summary" }}
-  {{ if $.Param "ananke.pages.show_list_images" }}
-    {{ $summary_template = "summary-with-image" }}
+  {{ $pages := .RegularPages }}
+  {{ if .IsSection }}
+    {{ $pages = .RegularPagesRecursive }}
   {{ end }}
-
-  {{/* 有子板块就递归取文章，否则沿用主题默认行为 */}}
-  {{ $paginator := "" }}
-  {{ if .Sections }}
-    {{ $paginator = .Paginate .RegularPagesRecursive }}
-  {{ else }}
-    {{ $paginator = .Paginator }}
-  {{ end }}
+  {{ $paginator := .Paginate $pages.ByDate.Reverse }}
 
   <article class="pa3 pa4-ns nested-copy-line-height">
     <section class="cf ph3 ph5-l pv3 pv4-l f4 tc-l center measure-wide lh-copy nested-links {{ $.Param "text_color" | compare.Default "mid-gray" }}">
@@ -42,13 +33,24 @@
       </section>
     {{ end }}
 
-    <section class="flex-ns mt5 flex-wrap justify-around">
-      {{ range $paginator.Pages }}
-        <div class="w-100 w-30-l mb4 relative bg-white">
-          {{ .Render $summary_template }}
-        </div>
+    <div class="article-list-container">
+      {{ if $paginator.Pages }}
+        <ul class="article-list" aria-label="{{ .Title }}文章列表">
+          {{ range $paginator.Pages }}
+            <li class="article-list-item">
+              {{ if partial "func/ShowDate.html" . }}
+                <time class="article-list-date" datetime="{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}">
+                  {{ .Date.Format "2006-01-02" }}
+                </time>
+              {{ end }}
+              <a class="article-list-title" href="{{ .RelPermalink }}">{{ .Title }}</a>
+            </li>
+          {{ end }}
+        </ul>
+      {{ else }}
+        <p class="tc gray pv4">暂无文章</p>
       {{ end }}
-    </section>
+    </div>
     {{ partial "pagination.html" . -}}
   </article>
 {{ end }}

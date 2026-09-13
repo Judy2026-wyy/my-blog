@@ -1,0 +1,67 @@
+.article-list-container {
+  max-width: 56rem;
+  margin: 2.5rem auto 0;
+}
+
+.article-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.article-list-item {
+  display: flex;
+  align-items: baseline;
+  gap: 1.75rem;
+  padding: 1.25rem 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.article-list-date {
+  flex: 0 0 6.5rem;
+  color: #666;
+  font-size: 0.875rem;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.6;
+}
+
+.article-list-title {
+  min-width: 0;
+  color: #222;
+  font-size: 1.125rem;
+  line-height: 1.6;
+  text-decoration: none;
+  overflow-wrap: anywhere;
+}
+
+.article-list-title:hover,
+.article-list-title:focus-visible {
+  color: #357edd;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.article-list-title:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 4px;
+}
+
+@media (max-width: 40rem) {
+  .article-list-container {
+    margin-top: 1.5rem;
+  }
+
+  .article-list-item {
+    gap: 0.75rem;
+    padding: 1rem 0;
+  }
+
+  .article-list-date {
+    flex-basis: 5.5rem;
+    font-size: 0.75rem;
+  }
+
+  .article-list-title {
+    font-size: 1rem;
+  }
+}

@@ -14,6 +14,7 @@ theme = 'ananke'
 [params.ananke]
   show_recent_posts = true
   show_categories = true
+  custom_css = ['article-list.css']
 
 # ↓↓↓ 网站顶部导航栏。weight 数字越小越靠左 ↓↓↓
 
