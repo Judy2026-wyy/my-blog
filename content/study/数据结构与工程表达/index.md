@@ -8,7 +8,7 @@ tag = ['Python', '工程基础', '数据结构']
 source : [DataWhale Python 基础与数据表示 ](https://github.com/datawhalechina/llm-algo-leetcode/blob/main/00_Prerequisites/01_Python_Essentials_for_LLM.ipynb)
 
 ## Q1：list / dict / class / with 各自负责什么？**
-![alt text](image-1.png)
+![数据结构与工程表达截图：list、dict、class 与 with](image-1.png)
 
 
 !!!!! **list 装顺序数据，dict 装命名状态，class 装可复用对象，with 管资源收尾。**
@@ -69,10 +69,10 @@ with TemporaryDirectory() as tmpdir:  # 创建临时目录
 # 离开 with，临时目录和 check.txt 自动被删除
 ```
 **TemporaryDirectory()**，它自带“退出时删除临时目录”的功能。with 会在退出缩进块时触发这个清理功能，目录及其中的文件都会被删除。
-![alt text](image-2.png)
+![临时目录自动清理示例截图](image-2.png)
 
 ##### 如何查看临时目录的内容
-![alt text](image-3.png)
+![数据结构与工程表达截图：查看临时目录的内容](image-3.png)
 --------------------------
 #### 什么时候该把零散变量收成对象？
 如果这组字段会被反复的读取，覆盖，打印或者传递，就需要被封存进对象中。这样更新，默认值，输出格式都更加稳定
@@ -100,4 +100,3 @@ config = RunConfig()
 print('RunConfig 默认值：', config.as_dict())
 ```
 所有数据都会被对象以规定的形式输出和更新
-
